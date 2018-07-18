@@ -29,11 +29,19 @@
 
 <script>
 //一般直接写在一个js文件中
+
+//使用Layui的layer和form模块
 layui.use(['layer', 'form'], function(){
   var layer = layui.layer,
       form = layui.form;
 
   layer.msg('Hello World');
+  
+  //监听提交按钮
+  form.on('submit(test)', function(data){
+    console.log(data);
+  });
+  
 });
 </script>
 
