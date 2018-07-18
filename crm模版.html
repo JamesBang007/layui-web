@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>表单模块</title>
+</head>
+<body>
+
+
+
+<link rel="stylesheet" href="./layui-v2.3.0/css/layui.css">
+<link rel="stylesheet" href="pc_96456c6929.css">
+<script src="./layui-v2.3.0/layui.js" charset="utf-8"></script>
+
+<style type="text/css">
+.layui-table td, .layui-table th{ padding: 9px 10px; }
+.td-project{}
+.td-project .project-item-list{ float: left; }
+.td-project .layui-btn{ height: 24px; line-height: 24px; padding: 0 5px;}
+.td-project .layui-btn .layui-icon{margin: 0;}
+.layui-form-select{ margin-top: 6px;}
+</style>
+
+<div id="app-container" class="container">
+    <div id="app-third-sidebar" class="js-app-third-sidebar">
+        <nav class="ui-nav js-page-nav" style="display: block;">
+            <ul>
+                <li id="js-nav-list-index" class="active">
+                  <span>{eq name="$choose_type" value="1"}导入成交数据{/eq}{neq name="$choose_type" value="1"}导入回款数据{/neq}</span>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <div id="app-container-top"></div>
+    <div class="app">
+        <div class="app-inner clearfix">
+            <div class="app-init-container">
+                <div class="app__content">
+                <!--表格1开始-->
+                
+                <table class="layui-table">
+                  <colgroup>
+                    <col width="150">
+                    <col width="200">
+                    <col>
+                  </colgroup>
+                  <thead>
+                    <tr>
+                      <th>昵称</th>
+                      <th>加入时间</th>
+                      <th>签名</th>
+                    </tr> 
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>贤心</td>
+                      <td>2016-11-29</td>
+                      <td>人生就像是一场修行</td>
+                    </tr>
+                    <tr>
+                      <td>许闲心</td>
+                      <td>2016-11-28</td>
+                      <td>于千万人之中遇见你所遇见的人，于千万年之中，时间的无涯的荒野里…</td>
+                    </tr>
+                  </tbody>
+                </table>
+                
+                
+                
+                <form action="__ADMIN__Dealimport/Dealimport_deal" method="post" class="layui-form">
+                <!--表格开始-->
+                <table class="layui-table" lay-skin="line">
+                  <thead>
+                    <tr>
+                      <th width="5">
+                        <input type="text" name="choose_type" value="{$choose_type}" style="display: none" />
+                        <textarea style="display: none;" name="content">{$content}</textarea>
+                      </th>
+                      <th width="5">序号</th>
+                      <th width="40">[意向]客户姓名</th>
+                      <th width="50">电话</th>
+                      <th width="60">单位 / 状态</th>
+                      <th width="30">客户状态</th>
+                      <th width="50">成交时间</th>
+                      <!--{eq name="$choose_type" value="1"}
+                      <th>派单项目</th>
+                      {/eq}-->
+                      <th width="150">派单项目</th>
+                      <th width="50">警告</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>                        
+                        <input type="checkbox" name="customer_ids[]" lay-skin="primary" value="{$list.customer_info.Customer_ID}"
+                          {eq name='$list.Illegal' value='0'}disabled{/eq} {eq name='$list.Illegal' value='1'}checked{/eq} />
+                      </td>
+                      <td class="td-id">{$k}</td>
+                      <td class="td-name">
+                        <!--<input style="display: none;" name="Unit_ID_{$list.customer_info.Customer_ID}"
+                          {eq name='$list.Illegal' value='0'}disabled{/eq} value="{php} echo $list['customer_info']['orderunit'][0]['Unit_ID'];{/php}">
+                        {$list.customer_info.Customer_Name}-->
+                        <span>王二小</span>
+                      </td>
+                      <td class="td-tel">
+                        <!--{neq name="$list.mobile_is_Illegal" value='0'}{$list[0]}{/neq}
+                        <input type="hidden" name="deal_mobile_{$list.customer_info.Customer_ID}" value="{$list[0]}" />
+                        {eq name="$list.mobile_is_Illegal" value='0'}{$list[0]}{/eq}-->
+                        <span>18914725836</span>
+                      </td>
+                      <td>
+                        <span>百度网讯科技有限公司</span>
+                      </td>
+                      <td>
+                        <!--<span id="span-status-{$list.Customer_ID}">
+                        {eq name="$list.customer_info.status" value="0"}无{/eq}
+                        {eq name="$list.customer_info.status" value="2"}已见面{/eq}
+                        {eq name="$list.customer_info.status" value="3"}已成交{/eq}
+                        {eq name="$list.customer_info.status" value="5"}已重单{/eq}
+                        </span>-->
+                        <span>已见面</span>
+                      </td>
+                      <td>
+                        <!--<span>{$list.deal_time}</span>-->
+                        <span>2018-07-13</span>
+                      </td>
+                      <td class="td-project">
+                        <div class="project-item-list layui-inline">
+                          <!--<input type="checkbox" name="project_id[]" value="{$list.customer_info.Customer_ID}" title="{$list.project_info.name}" lay-skin="primary">-->
+                          <input type="checkbox" name="project_id[]" value="1" title="项目1" lay-skin="primary">
+                          <input type="checkbox" name="project_id[]" value="2" title="项目2" lay-skin="primary">
+                        </div>
+                        <div class="layui-btn layui-btn-sm layui-inline" title="添加项目"><i class="layui-icon">&#xe654;</i></div>
+                        <div class="layui-inline">
+                          <select name="city" lay-verify="required" lay-filter="project-select" lay-search>
+                            <option value="">带搜索的选择框</option>
+                            <option value="1">layer</option>
+                            <option value="2">form</option>
+                            <option value="">空</option>
+                            <option value="3">layim</option>
+                            <option value="4">element</option>
+                            <option value="5">laytpl</option>
+                            <option value="6">upload</option>
+                            <option value="7">laydate</option>
+                            <option value="8">laypage</option>
+                            <option value="9">flow</option>
+                            <option value="10">util</option>
+                            <option value="11">code</option>
+                            <option value="12">tree</option>
+                            <option value="13">layedit</option>
+                            <option value="14">nav</option>
+                            <option value="15">tab</option>
+                            <option value="16">table</option>
+                            <option value="17">select</option>
+                            <option value="18">checkbox</option>
+                            <option value="19">switch</option>
+                            <option value="20">radio</option>
+                          </select>
+                        </div>
+                      </td>
+                      <td>
+                        <!--<span>
+                          {eq name="$list.mobile_is_Illegal" value='0'}电话号码不存在{/eq}
+                          {eq name="$list.hospital_is_Illegal" value='0'}成交医院不存在{/eq}
+                          {eq name="$list.status_isnot_deal" value='0'}未成交不能确认回款{/eq}
+                          {eq name="$list.cglx_is_Illegal" value='0'}成交项目匹配失败{/eq}
+                          {eq name="$list.status_is_Illegal" value='0'}已确认过的订单{/eq}
+                          {eq name="$list.deal_time_Illegal" value='0'}成交时间格式错误{/eq}
+                        </span>-->
+                        <span>已确认过的订单</span>
+                      </td>                      
+                    </tr>
+                    
+                    
+                    
+                    
+                    <tr>
+                      <td>
+                        <input type="checkbox" name="customer_ids[]" lay-skin="primary" value="2"/>
+                      </td>
+                      <td class="td-id">2</td>
+                      <td class="td-name">
+                        <span>王二小</span>
+                      </td>
+                      <td class="td-tel">
+                        <span>18914725836</span>
+                      </td>
+                      <td>
+                        <span>百度网讯科技有限公司</span>
+                      </td>
+                      <td>
+                        <span>已成交</span>
+                      </td>
+                      <td>
+                        <span>2018-07-13</span>
+                      </td>
+                      <td>
+                        <span>项目</span>
+                      </td>
+                      <td>
+                        <span>已确认过的订单</span>
+                      </td>                      
+                    </tr>
+                    <tr>
+                      <td>
+                        <input type="checkbox" name="customer_ids[]" lay-skin="primary" value="2"/>
+                      </td>
+                      <td class="td-id">2</td>
+                      <td class="td-name">
+                        <span>王二小</span>
+                      </td>
+                      <td class="td-tel">
+                        <span>18914725836</span>
+                      </td>
+                      <td>
+                        <span>百度网讯科技有限公司</span>
+                      </td>
+                      <td>
+                        <span>已成交</span>
+                      </td>
+                      <td>
+                        <span>2018-07-13</span>
+                      </td>
+                      <td class="td-project">
+                        <div class="project-item-list layui-inline">
+                          <!--<input type="checkbox" name="project_id[]" value="{$list.customer_info.Customer_ID}" title="{$list.project_info.name}" lay-skin="primary">-->
+                          <input type="checkbox" name="project_id[]" value="100" title="项目1" lay-skin="primary">
+                        </div>
+                        <div class="layui-btn layui-btn-sm layui-inline" title="添加项目"><i class="layui-icon">&#xe654;</i></div>
+                        <div class="layui-inline">
+                          <select name="city" lay-verify="required" lay-filter="project-select" lay-search>
+                            <option value="">带搜索的选择框</option>
+                            <option value="1">layer</option>
+                            <option value="2">form</option>
+                            <option value="">空</option>
+                            <option value="3">layim</option>
+                            <option value="4">element</option>
+                            <option value="5">laytpl</option>
+                            <option value="6">upload</option>
+                            <option value="7">laydate</option>
+                            <option value="8">laypage</option>
+                            <option value="9">flow</option>
+                            <option value="10">util</option>
+                            <option value="11">code</option>
+                            <option value="12">tree</option>
+                            <option value="13">layedit</option>
+                            <option value="14">nav</option>
+                            <option value="15">tab</option>
+                            <option value="16">table</option>
+                            <option value="17">select</option>
+                            <option value="18">checkbox</option>
+                            <option value="19">switch</option>
+                            <option value="20">radio</option>
+                          </select>
+                        </div>
+                      </td>
+                      <td>
+                        <span>已确认过的订单</span>
+                      </td>                      
+                    </tr>
+                    <tr>
+                      <td>
+                        <input type="checkbox" name="customer_ids[]" lay-skin="primary" value="2"/>
+                      </td>
+                      <td class="td-id">2</td>
+                      <td class="td-name">
+                        <span>王二小</span>
+                      </td>
+                      <td class="td-tel">
+                        <span>18914725836</span>
+                      </td>
+                      <td>
+                        <span>百度网讯科技有限公司</span>
+                      </td>
+                      <td>
+                        <span>已成交</span>
+                      </td>
+                      <td>
+                        <span>2018-07-13</span>
+                      </td>
+                      <td>
+                        <span>项目</span>
+                      </td>
+                      <td>
+                        <span>已确认过的订单</span>
+                      </td>                      
+                    </tr>
+                    <tr>
+                      <td>
+                        <input type="checkbox" name="customer_ids[]" lay-skin="primary" value="2"/>
+                      </td>
+                      <td class="td-id">2</td>
+                      <td class="td-name">
+                        <span>王二小</span>
+                      </td>
+                      <td class="td-tel">
+                        <span>18914725836</span>
+                      </td>
+                      <td>
+                        <span>百度网讯科技有限公司</span>
+                      </td>
+                      <td>
+                        <span>已成交</span>
+                      </td>
+                      <td>
+                        <span>2018-07-13</span>
+                      </td>
+                      <td>
+                        <span>项目</span>
+                      </td>
+                      <td>
+                        <span>已确认过的订单</span>
+                      </td>                      
+                    </tr>
+                    
+                    
+                    
+                  </tbody>
+                </table>
+                  
+                <!--表格结束-->
+                </form>
+
+
+
+
+                </div>
+            </div>
+            <div class="notify-bar js-notify animated hinge hide">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+<script>
+layui.use('form', function(){
+  var form = layui.form;
+  
+  //各种基于事件的操作，下面会有进一步介绍
+  
+  //监听select选择
+  form.on('select(project-select)', function(data){
+    
+    var txt = $(this).text();
+    var pid = data.value;
+    var html_str = '<input type="checkbox" name="project_id[]" value="'+pid+'" title="'+txt+'" lay-skin="primary" checked>';
+    
+    if(!pid){
+      return false;
+    }    
+    var hasValue = false;
+    var list = $(this).parents("td.td-project").find(".project-item-list.layui-inline");
+    //判断项目是否已添加
+    list.find("input").each(function(){
+      console.log($(this).attr("value"));
+      if($(this).attr("value")==pid){
+        hasValue = true;
+        layer.msg("请勿重复添加项目");
+        return false;
+      }
+    });
+    
+    if(!hasValue){
+      //执行添加
+      list.append(html_str);
+      layui.form.render('checkbox');
+    }
+  }); 
+  
+  
+  
+  //监听提交按钮
+  form.on('submit(Submit1)', function(data){
+    console.log(data);
+    return false;
+  });
+  
+  
+});
+</script>
+
+
+
+</body>
+</html>
