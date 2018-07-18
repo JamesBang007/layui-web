@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>开始使用 - 入门指南</title>
+</head>
+<body>
+
+<h2>1、引入框架文件</h2>
+./layui/css/layui.css
+<br>
+./layui/layui.js //提示：如果是采用非模块化方式，此处可换成：./layui/layui.all.js
+<br>
+
+<link rel="stylesheet" href="./layui-v2.3.0/css/layui.css">
+<script src="./layui-v2.3.0/layui.js" charset="utf-8"></script>
+
+
+<h2>2、你的HTML代码</h2>
+
+
+<link rel="stylesheet" href="app.css">
+<div>HTML代码...</div>
+
+
+<h2>模块化使用</h2>
+
+<script>
+//一般直接写在一个js文件中
+layui.use(['layer', 'form'], function(){
+  var layer = layui.layer,
+      form = layui.form;
+
+  layer.msg('Hello World');
+});
+</script>
+
+</body>
+</html>

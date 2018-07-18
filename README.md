@@ -1,5 +1,3 @@
-###Welcome to use MarkDown
-
 <p align=center>
   <a href="http://www.layui.com">
     <img src="http://cdn.layui.com/upload/2016_10/168_1476644144774_50450.png" alt="layui" width="520">
@@ -29,18 +27,18 @@ layui 定义为“经典模块化”，并非是自吹她自身有多优秀，�
 ```js
 //layui模块的定义
 layui.define([mods], function(exports){
-  
+
   //……
-  
+
   exports('mod', api);
 });  
- 
+
 //layui模块的使用
 layui.use(['mod1', 'mod2'], function(args){
   var mod = layui.mod1;
-  
+
   //……
-  
+
 });    
 ```
 没错，她具备AMD的影子，又并非受限于commonjs的那些条条框框，layui 认为这种轻量的组织方式，比WebPack更符合绝大多数场景。所以她坚持采用经典模块化，也正是能让人避开工具的复杂配置，回归简单，安静高效地撸一会原生态的HTML、CSS、JavaScript。
@@ -69,19 +67,19 @@ layui.use(['mod1', 'mod2'], function(args){
   <link rel="stylesheet" href="../layui/css/layui.css">
 </head>
 <body>
- 
+
 <!-- 你的HTML代码 -->
- 
+
 <script src="../layui/layui.js"></script>
 <script>
 //一般直接写在一个js文件中
 layui.use(['layer', 'form'], function(){
   var layer = layui.layer
   ,form = layui.form;
-  
+
   layer.msg('Hello World');
 });
-</script> 
+</script>
 </body>
 </html>
 ```
@@ -98,19 +96,19 @@ layui.use(['layer', 'form'], function(){
   <link rel="stylesheet" href="../layui/css/layui.css">
 </head>
 <body>
- 
+
 <!-- 你的HTML代码 -->
- 
+
 <script src="../layui/layui.all.js"></script>
 <script>
 //由于模块都一次性加载，因此不用执行 layui.use() 来加载对应模块，直接使用即可：
 ;!function(){
   var layer = layui.layer
   ,form = layui.form;
-  
+
   layer.msg('Hello World');
 }();
-</script> 
+</script>
 </body>
 </html>  
 ```
