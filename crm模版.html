@@ -20,7 +20,8 @@
 .td-project .project-item-list{ float: left; }
 .td-project .layui-btn{ height: 24px; line-height: 24px; padding: 0 5px;}
 .td-project .layui-btn .layui-icon{margin: 0;}
-.layui-form-select{ margin-top: 6px;}
+.td-project .layui-unselect{ margin-bottom: 5px; }
+.project-select-box{ min-width: 180px; width: 240px; margin-top: 5px; }
 </style>
 
 <div id="app-container" class="container">
@@ -69,7 +70,7 @@
                 
                 
                 
-                <form action="__ADMIN__Dealimport/Dealimport_deal" method="post" class="layui-form">
+                <form action="__ADMIN__Dealimport/Dealimport_deal" method="post" class="layui-form" id="form">
                 <!--表格开始-->
                 <table class="layui-table" lay-skin="line">
                   <thead>
@@ -112,6 +113,43 @@
                       </td>
                       <td>
                         <span>百度网讯科技有限公司</span>
+                        <table class="layui-table" lay-skin="nob" style="min-width:250px;">
+                          <!--{volist name="$list.customer_info.orderunit" id="olist"}-->
+                          <tr>
+                              <td style="width: 170px;overflow: hidden">
+                                <a href="javascript:searchOrder('{$olist.OU_ID}', '{$list.customer_info.Customer_ID}', '{$olist.Unit_ID}')">{$olist.Unit_Name}</a>
+                                
+                              </td>
+                              <!--{if condition="$is_admin"}-->
+                              <td style="width: 50px;">
+                                  <a href="javascript:evalOrder('{$olist.Unit_ID}','{$list.customer_info.User_ID_Customer}', '{$list.customer_info.Customer_ID}','{$list.customer_info.Customer_Name}','{$olist.OU_ID}')">评价</a>
+                              </td>
+                              {/if}
+                              <td style="width: 82px">
+                                  <!--{php}
+                                  if(!$olist['Order_State']){
+                                  echo "无";
+                                  }elseif($olist['Order_State']=='1'){
+                                  echo "跟进中";
+                                  }elseif($olist['Order_State']=='2'){
+                                  echo "已见面";
+                                  }elseif($olist['Order_State']=='3'){
+                                  echo "成交";
+                                  }elseif($olist['Order_State']=='4'){
+                                  echo "不成交";
+                                  }elseif($olist['Order_State']=='5'){
+                                  if($olist['locked']){
+                                  echo "重单";
+                                  }else{
+                                  echo "<span style='color:red'>重单</span>";
+                                  }
+
+                                  }
+                                  {/php}-->已见面
+                              </td>
+                          </tr>
+                          {/volist}
+                        </table>
                       </td>
                       <td>
                         <!--<span id="span-status-{$list.Customer_ID}">
@@ -127,18 +165,17 @@
                         <span>2018-07-13</span>
                       </td>
                       <td class="td-project">
-                        <div class="project-item-list layui-inline">
+                        <div class="project-item-list">
                           <!--<input type="checkbox" name="project_id[]" value="{$list.customer_info.Customer_ID}" title="{$list.project_info.name}" lay-skin="primary">-->
                           <input type="checkbox" name="project_id[]" value="1" title="项目1" lay-skin="primary">
                           <input type="checkbox" name="project_id[]" value="2" title="项目2" lay-skin="primary">
                         </div>
-                        <div class="layui-btn layui-btn-sm layui-inline" title="添加项目"><i class="layui-icon">&#xe654;</i></div>
-                        <div class="layui-inline">
+                        <div class="project-add-btn layui-btn layui-btn-sm layui-inline" title="添加项目"><i class="layui-icon">&#xe654;</i></div>
+                        <div class="project-select-box" style="display: none;">
                           <select name="city" lay-verify="required" lay-filter="project-select" lay-search>
                             <option value="">带搜索的选择框</option>
                             <option value="1">layer</option>
                             <option value="2">form</option>
-                            <option value="">空</option>
                             <option value="3">layim</option>
                             <option value="4">element</option>
                             <option value="5">laytpl</option>
@@ -224,17 +261,17 @@
                         <span>2018-07-13</span>
                       </td>
                       <td class="td-project">
-                        <div class="project-item-list layui-inline">
+                        <div class="project-item-list">
                           <!--<input type="checkbox" name="project_id[]" value="{$list.customer_info.Customer_ID}" title="{$list.project_info.name}" lay-skin="primary">-->
-                          <input type="checkbox" name="project_id[]" value="100" title="项目1" lay-skin="primary">
+                          <input type="checkbox" name="project_id[]" value="1" title="项目1" lay-skin="primary">
+                          <input type="checkbox" name="project_id[]" value="2" title="项目2" lay-skin="primary">
                         </div>
-                        <div class="layui-btn layui-btn-sm layui-inline" title="添加项目"><i class="layui-icon">&#xe654;</i></div>
-                        <div class="layui-inline">
+                        <div class="project-add-btn layui-btn layui-btn-sm layui-inline" title="添加项目"><i class="layui-icon">&#xe654;</i></div>
+                        <div class="project-select-box" style="display: none;">
                           <select name="city" lay-verify="required" lay-filter="project-select" lay-search>
                             <option value="">带搜索的选择框</option>
                             <option value="1">layer</option>
                             <option value="2">form</option>
-                            <option value="">空</option>
                             <option value="3">layim</option>
                             <option value="4">element</option>
                             <option value="5">laytpl</option>
@@ -322,7 +359,9 @@
                   
                 <!--表格结束-->
                 </form>
-
+                <div class="form-submit-row">
+                  <button class="layui-btn" lay-submit lay-filter="formPost">确认无误，立刻导入</button>
+                </div>
 
 
 
@@ -338,6 +377,19 @@
 
 <script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
 <script>
+
+//开启or关闭项目选择
+$(".project-add-btn").on("click",function(){
+  console.log($(this).parent());
+  var select = $(this).parent().find(".project-select-box");
+  console.log(select.css("display"));
+  if(select.css("display")=="block"){
+    select.hide();
+  }else{
+    select.show();
+  }
+});
+
 layui.use('form', function(){
   var form = layui.form;
   
@@ -354,7 +406,7 @@ layui.use('form', function(){
       return false;
     }    
     var hasValue = false;
-    var list = $(this).parents("td.td-project").find(".project-item-list.layui-inline");
+    var list = $(this).parents("td.td-project").find(".project-item-list");
     //判断项目是否已添加
     list.find("input").each(function(){
       console.log($(this).attr("value"));
@@ -370,17 +422,19 @@ layui.use('form', function(){
       list.append(html_str);
       layui.form.render('checkbox');
     }
-  }); 
-  
-  
+  });   
   
   //监听提交按钮
-  form.on('submit(Submit1)', function(data){
+  form.on('submit(formPost)', function(data){
     console.log(data);
-    return false;
+    layer.confirm("确认之后不能修改，确定要提交吗", function (index) {
+        $("#form").submit();
+    }, function () {
+        layer.closeAll();
+        return false;
+    });
   });
-  
-  
+    
 });
 </script>
 
