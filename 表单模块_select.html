@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>表单模块_select</title>
+<link rel="stylesheet" href="./layui-v2.3.0/css/layui.css">
+<link rel="stylesheet" href="app.css">
+<script src="./layui-v2.3.0/layui.js" charset="utf-8"></script>
+</head>
+<body>
+
+<div class="layui-main">
+
+    <form class="layui-form">
+        <!-- 提示：如果你不想用form，你可以换成div等任何一个普通元素 -->
+        <div class="layui-form-item">
+            <label class="layui-form-label">输入框</label>
+            <div class="layui-input-block">
+                <input type="text" name="" placeholder="请输入" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">医院选择框</label>
+            <div class="layui-input-block">
+                <!--<select name="interest" lay-filter="aihao">-->
+                <select id="hospital" name="hospital" required lay-search lay-verify="required" lay-filter="hospital" placeholder="请输入医院名称" class="layui-select">
+                    <option value="">请选择医院</option>
+                    <option value="1">默认医院1</option>
+                    <option value="2">默认医院2</option>
+                    <option value="3">默认医院3</option>
+                    <option value="4">成都艾米丽医疗美容</option>
+                    <option value="5">四川晶肤医学美容医院</option>
+                    <option value="6">成都军大医院</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">请填写描述</label>
+            <div class="layui-input-block">
+                <textarea placeholder="请输入内容" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="Submit1">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+        <!-- 更多表单结构排版请移步文档左侧【页面元素-表单】一项阅览 -->
+    </form>
+</div>
+
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+<script>
+layui.use('form', function() {
+    var form = layui.form;
+
+    //各种基于事件的操作，下面会有进一步介绍
+    //选择医院后，请求医生
+    form.on("select(hospital)", function(e) {
+        var hospital_id = $("#hospital").val();
+        console.log(hospital_id);
+        console.log(e);
+    });
+
+    //监听提交按钮
+    form.on('submit(Submit1)', function(data) {
+        console.log(data);
+        return false;
+    });
+    console.log($("#hospital").siblings());
+    $("#hospital").siblings().click(function() {
+        $el = $(this);
+        console.log(666, $(this));
+        $el.on("input", "input", function(e) {
+            var index = $el.text().indexOf("无匹配项");
+            console.log(index, $(this).val());
+            if(index == -1) {
+                console.log(index, $el.text());
+            }else{
+                console.log(index, $el.text());
+            }
+        });
+    });
+});
+</script>
+
+</body>
+</html>
